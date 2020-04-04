@@ -60,8 +60,8 @@
         // rememberPos: false,
         // moveable: false,
         position: 'fit', // 'center' or '40px' or '10%',
-        // scrollInside: false,
-        // headerHeight: 'auto',
+        scrollInside: true,
+        headerHeight: 'auto',
     };
 
     var setDialogPos = function($dialog, pos) {
@@ -91,11 +91,11 @@
         if (options.scrollInside && $body.length) {
             var headerHeight = options.headerHeight;
             if (typeof headerHeight !== 'number') {
-                headerHeight = $dialog.find('.modal-header').height();
+                headerHeight = $dialog.find('.modal-header').outerHeight(true);
             } else if ($.isFunction(headerHeight)) {
                 headerHeight = headerHeight($header);
             }
-            bodyCss.maxHeight = winHeight - headerHeight;
+            bodyCss.maxHeight = winHeight - headerHeight -2;
             bodyCss.overflow = $body[0].scrollHeight > bodyCss.maxHeight ? 'auto' : 'visible';
             $body.css(bodyCss);
         }
@@ -171,7 +171,7 @@
 
         that.$element.trigger(e)
 
-        that.$element.toggleClass('modal-scroll-inside', !!that.options.scrollInside);
+        that.$element.toggleClass('body-modal-scroll-inside', !!that.options.scrollInside);
 
         if(that.isShown || e.isDefaultPrevented()) return
 
@@ -187,10 +187,7 @@
 
         that.escape()
 
-        that.$element.on('click.dismiss.' + zuiname, '[data-dismiss="modal"]',function(e) {
-            that.hide();
-            e.stopPropagation();
-        })
+        that.$element.on('click.dismiss.' + zuiname, '[data-dismiss="modal"]', $.proxy(that.hide, that))
 
         that.backdrop(function() {
             var transition = $.support.transition && that.$element.hasClass('fade')
@@ -440,3 +437,4 @@
     })
 
 }(jQuery, undefined);
+
