@@ -20,7 +20,7 @@ var extend = require('extend'),
     colors = require('colors'),
     gulp = require('gulp'),
     jsonminify = require('gulp-jsonminify'),
-    zui = require('./zui.json'),
+    zui = require('./myzui.json'),
     pkg = require('./package.json'),
     babel = require('gulp-babel'),
     showFileDetail = true;
@@ -555,7 +555,7 @@ gulp.task('minJSON', function (cb) {
         .pipe(jsonminify())
         .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest('./docs/'));
-    gulp.src(['zui.json'])
+    gulp.src(['myzui.json'])
         .pipe(jsonminify())
         .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest('./docs/'));
